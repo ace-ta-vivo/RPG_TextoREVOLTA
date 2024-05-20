@@ -1,0 +1,196 @@
+#Importando a biblioteca random para gerar números aleatórios
+import random
+
+
+class Personagem:
+    #Criando a classe Personagem com a inicialização dos atributos.
+    def __init__(self, nome, classe, nivel, vida,dano, magia, ultimate):
+        self.nome = nome
+        self.vida = vida
+        self.nivel = nivel
+        self.classe = classe
+        self.dano = dano
+        self.magia = magia
+        self.ultimate = ultimate
+  # Definindo um método para mostrar os dados de um personagem para o usuário.
+    def ficha(self):
+        print("SEGUE A FICHA DO PERSONAGEM: ")
+        print("Nome: ", self.nome)
+        print("Classe: ", self.classe)
+        print("Nível: ", self.nivel)
+        print("Vida: ", self.vida)
+        print("Dano básico: ", (self.dano+(self.dano*(self.nivel/10))))
+        print("Dano Habilidade: ", self.magia+(self.magia*(self.nivel/10)))
+        print("Ultimate: ", self.ultimate+(self.ultimate*(self.nivel/10)))
+  
+  #Definindo um método para os personagens se defenderem e reduzirem a vida deles, método padrão para todas as classes. Defesa feita com base em números randômicos de 0 a 10, que reduzem em porcentagem, de 0 a 100% do dano recebido, retorna a vida do personagem reduzindo o dano não defendido.
+    def defender(self,dano_recebido):
+        defesa = random.randint(0, 10) * 10
+        nova_vida = self.vida - (dano_recebido - (dano_recebido * (defesa/100)))
+        dano_real = dano_recebido - (dano_recebido * (defesa/100))
+        print(f"{self.nome} ({self.classe}) usou sua defesa e defendeu {defesa} % de dano, o dano total     foi {dano_real}, e sua vida atualmente é {nova_vida} !")        
+        if(nova_vida <= 0):
+          print(f"O personagem {self.nome} ({self.classe}) morreu!")
+          return 0
+        else:
+          return nova_vida
+  #Definindo um método para o personagem subir de nível.         
+    def upa_nivel(self):
+        novo_nivel = self.nivel + 1
+        return novo_nivel
+      
+class Pirata_espadachim(Personagem):
+    #Criando a classe pirata_espadachim que herda os atributos da classe personagem, a classe é inicializada com os atributos específicos da classe, dano, vida, magia e ultimate.
+    def __init__(self, nome, classe, nivel, vida,dano, magia, ultimate):
+        super().__init__(nome, classe, nivel, vida,dano, magia, ultimate)
+        self.vida = 500
+        self.dano = 30
+        self.magia = 60
+        self.ultimate = 110
+      
+     #Definindo um metodo para o personagem atacar com seu ataque fraco, dano aumentado em 10% para cada nível do personagem, método retorna o dano final do ataque.
+    def ataque_basico(self):
+        print(f"{self.nome} ({self.classe}) atacou com sua espada e causou {(self.dano+(self.dano*(self.nivel/10)))} de dano!") 
+        return (self.dano+(self.dano*(self.nivel/10)))
+      #Definindo um metodo para o personagem atacar com seu ataque médio, dano aumentado em 10% para cada nível do personagem, método retorna o dano final do ataque.
+    def habilidade_especial(self):
+        print(f"{self.nome} ({self.classe}) atacou com sua habilidade espadas invisiveis e causou {(self.magia+(self.magia*(self.nivel/10)))} de dano!")
+        return (self.magia+(self.magia*(self.nivel/10)))
+      #Definindo um metodo para o personagem atacar com seu ataque forte, dano aumentado em 10% para cada nível do personagem, método retorna o dano final do ataque.
+    def ataque_ultimate(self):
+        print(f"{self.nome} ({self.classe}) atacou com seu ultimate ESPADA GIGANTE FLAMEJANTE e causou causou {(self.ultimate+(self.ultimate*(self.nivel/10)))} de dano!")
+        return (self.ultimate+(self.ultimate*(self.nivel/10)))
+      
+class Pirata_atirador(Personagem):
+  #Criando a classe pirata_atirador que herda os atributos da classe personagem, a classe é inicializada com os atributos especificos da classe: dano, vida, magia e ultimate.
+  def __init__(self, nome, classe, nivel, vida,dano, magia, ultimate):
+    super().__init__(nome, classe, nivel, vida,dano, magia, ultimate)
+    self.vida = 400
+    self.dano = 60
+    self.magia = 70
+    self.ultimate = 90
+    
+  #Definindo um metodo para o personagem atacar com seu ataque fraco, dano aumentado em 10% para cada nível do personagem, método retorna o dano final do ataque.
+  def ataque_basico(self):
+    print(f"{self.nome} ({self.classe}) atacou com sua pistola e causou {(self.dano+(self.dano*(self.nivel/10)))} de dano!") 
+    return (self.dano+(self.dano*(self.nivel/10)))
+
+  #Definindo um metodo para o personagem atacar com seu ataque médio, dano aumentado em 10% para cada nível do personagem, método retorna o dano final do ataque.
+  def habilidade_especial(self):
+    print(f"{self.nome} ({self.classe}) atacou com sua habilidade multi disparos e causou {(self.magia+(self.magia*(self.nivel/10)))} de dano!")
+    return (self.magia+(self.magia*(self.nivel/10)))
+    
+    #Definindo um metodo para o personagem atacar com seu ataque forte, dano aumentado em 10% para cada nível do personagem, método retorna o dano final do ataque
+  def ataque_ultimate(self):
+    print(f"{self.nome} ({self.classe}) atacou com seu ultimate BAZUKAH e causou causou {(self.ultimate+(self.ultimate*(self.nivel/10)))} de dano!")
+    return (self.ultimate+(self.ultimate*(self.nivel/10)))
+
+class Pirata_necromante(Personagem):
+   #Criando a classe pirata_necromante que herda os atributos da classe personagem, a classe é inicializada com os atributos especificos da classe: dano, vida, magia e ultimate
+  def __init__(self, nome, classe, nivel, vida,dano, magia, ultimate):
+    super().__init__(nome, classe, nivel, vida,dano, magia, ultimate)
+    self.vida = 250
+    self.dano = 50
+    self.magia = 90
+    self.ultimate = 180
+  #Definindo um metodo para o personagem atacar com seu ataque fraco, dano aumentado em 10% para cada nível do personagem, método retorna o dano final do ataque.
+  def ataque_basico(self):
+    print(f"{self.nome} ({self.classe}) atacou com sua esfera de energia negra e causou {(self.dano+(self.dano*(self.nivel/10)))} de dano!") 
+    return (self.dano+(self.dano*(self.nivel/10)))
+    #Definindo um metodo para o personagem atacar com seu ataque médio, dano aumentado em 10% para cada nível do personagem, método retorna o dano final do ataque.
+  def habilidade_especial(self):
+    print(f"{self.nome} ({self.classe}) atacou com sua habilidade raio da morte e causou {(self.magia+(self.magia*(self.nivel/10)))} de dano!")
+    return(self.magia+(self.magia*(self.nivel/10)))
+    #Definindo um metodo para o personagem atacar com seu ataque forte, dano aumentado em 10% para cada nível do personagem, método retorna o dano final do ataque.
+  def ataque_ultimate(self):
+    print(f"{self.nome} ({self.classe}) atacou com seu ultimate RENSACIMENTO DOS MORTOS VIVOS e causou causou {(self.ultimate+(self.ultimate*(self.nivel/10)))} de dano!")
+    return (self.ultimate+(self.ultimate*(self.nivel/10)))
+
+  
+class Esqueleto():
+    ## Criando uma classe genérica para criar esqueletos a fim de demonstrar como funciona o combate no jogo, com vida, método para atacar e receber dano.
+
+    def __init__(self,dano, vida):
+        self.dano=100
+        self.vida=350
+
+    def ataque_basico(self,alvo):
+        print(f"Esqueleto atacou {alvo} com dano {self.dano} , {alvo} tentará se defender")
+        return self.dano
+
+    def receber_ataque(self, alvo, dano_recebido):
+        print(f"Esqueleto recebeu {dano_recebido} de dano de {alvo} sua vida atual é {(self.vida-dano_recebido)}")
+        nova_vida = self.vida - dano_recebido
+        if((self.vida-dano_recebido)<=0):
+          print("Esqueleto morreu")
+          return 0
+        else:
+          return nova_vida
+
+## Print para contextualizar o usuário e demonstrar opções de classes a serem escolhidas por ele.
+
+print("Olá Tudo bem? Essa é uma pequena demonstração do jogo de RPG de texto, A REVOLTA DO OITAVO MAR, ainda não é possível escolher o nome do seu personagem, mas temos algumas opções bem interessantes de classes com personagem pré-desenvoldidos, qual você gostaria de escolher?\n Para Pirata espadachim, tecle 1.\n Para Pirata atirador, tecle 2. \n Para Pirata necromante, tecle 3.")
+
+# Criando uma variável para armazenar o personagem escolhido pelo usuário, inicializando com o valor 0 para caso o usuário não escolha nenhuma das opções possíveis.
+
+personagem1 = None
+
+# Laço enquanto para caso o usuário não escolha nenhuma das opções possíveis, ele voltará a ser perguntado, e caso escolha corretamente, o laço se encerra e o personagem é inicializado de acordo com a subclasse escolhida pelo usuário, e é mostrada a ficha do personagem para o usuário.
+
+while personagem1 is None:
+    numero = int(input("Digite o número da classe que você gostaria de escolher: "))
+    
+    if numero == 1:
+        print("Você escolheu o Pirata Espadachim, bem-vindo à REVOLTA! Agora segue uma pequena ficha de status do seu personagem: \n")
+        personagem1 = Pirata_espadachim("Zoro", "Espadachim", 1, 0, 0, 0, 0)
+        personagem1.ficha()
+    elif numero == 2:
+        print("Você escolheu o Pirata Atirador, bem-vindo à REVOLTA! Agora segue uma pequena ficha de status do seu personagem: \n")
+        personagem1 = Pirata_atirador("Shanks", "Atirador", 1, 0, 0, 0, 0)
+        personagem1.ficha()
+    elif numero == 3:
+        print("Você escolheu o Pirata Necromante, bem-vindo à REVOLTA! Agora segue uma pequena ficha de status do seu personagem: \n")
+        personagem1 = Pirata_necromante("Khartus", "Necromante", 1, 0, 0, 0, 0)
+        personagem1.ficha()
+    else:
+        print("Opção inválida. Por favor, escolha um número entre 1 e 3.")
+# Inicializando uma variável do tipo esqueleto para demonstrar o combate no jogo.
+   
+esqueleto1=Esqueleto(0,0)
+# Print para contextualizar o usuário sobre como funciona o combate no jogo e criação de um contador que será utilizado para subir de nível.
+
+print("\n Agora faremos uma pequena demonstração do combate, você terá que escolher a habilidade desejada para atacar seu oponente Esqueleto, cada um de vocês atacara uma vez, e a cada 2 rodadas, voce ira subir de nivel e receber 10% de dano extra em todas as suas habilidades,  voce tera que escolher entre as 3 opções de ataque")
+contador_nivel = 0
+# Laço para o combate, o laço se encerra quando o esqueleto ou o personagem do usuário morrem. A cada duas entradas no laço, o contador de nível é aumentado em 1, e o personagem recebe 10% de dano extra em cada habilidade.
+
+while esqueleto1.vida > 0 and personagem1.vida > 0 :
+  if(contador_nivel == 2):
+    personagem1.nivel = personagem1.upa_nivel()
+    print("\n !!!!!LEVEL UP!!!!! \n")
+    contador_nivel=0
+  #usuário escolhe a habilidade de ataque que ele quer usar, caso ele escolha um numero que não existe, ele perde a jogada na rodada, caso ele escolha um numero que existe, o esqueleto recebe o dano da habilidade e sua vida é reduzida chamando os métodos mostrados mais acima,apos a escolha o personagem tem o contador de nÍvel aumentado em 1 .
+  print("Escolha a habilidade que você gostaria de usar: \n 1 - Ataque básico \n 2 - Habilidade especial \n 3 - Ultimate")
+  habilidade = int(input("Digite o número da habilidade que você gostaria de usar: "))
+ 
+  if habilidade == 1:
+     esqueleto1.vida=esqueleto1.receber_ataque(personagem1.nome, personagem1.ataque_basico())
+  elif habilidade == 2:
+    esqueleto1.vida=esqueleto1.receber_ataque(personagem1.nome, personagem1.habilidade_especial())
+  elif habilidade == 3:
+    esqueleto1.vida=esqueleto1.receber_ataque(personagem1.nome, personagem1.ataque_ultimate())
+  else:
+    print(f"Você digitou um número inválido, então seu ataque foi ignorado!")
+  if esqueleto1.vida > 0:
+    # Esqueleto ataca com seu ataque básico, e o personagem recebe o dano do esqueleto, utilizando o método defender já mostrado acima.
+
+    personagem1.vida=personagem1.defender(esqueleto1.ataque_basico(personagem1.nome))
+  contador_nivel += 1
+# Após o laço se encerrar, o programa mostra o resultado do combate, com mensagens diferentes caso o personagem ou o esqueleto morra. Ao final, mostra a ficha do personagem, com o dano modificado após subir de nível.
+
+if(esqueleto1.vida>0):
+  print("Huuum, parece que o esqueleto venceu dessa vez, mas voce pode tentar novamente! Vamos lá?Uma ultima coisa, esse é a ficha do seu personagem apos o combate: \n ")
+  personagem1.ficha()
+if(personagem1.vida>0):
+  print("Uau, parece que voce venceu dessa vez, parabens! Gostaria de testar um novo personagem? Vamos lá?, em breve teremos novidades e novas mecanicas para se divertir! Uma ultima coisa, esse é a ficha do seu personagem apos o combate: \n ")
+  personagem1.ficha()
+        
